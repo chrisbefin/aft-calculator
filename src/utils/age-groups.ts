@@ -25,7 +25,6 @@ export interface AgeGroup {
       if (age >= AGE_GROUPS[i].minAge && age <= AGE_GROUPS[i].maxAge) {
         return i
       }
-      return AGE_GROUPS.length-1;
     }
     // Default to the last age group if no match is found
     return AGE_GROUPS.length - 1

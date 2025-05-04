@@ -130,36 +130,42 @@ export default function ArmyFitnessTestCalculator() {
 
     // Calculate individual event scores using the utility functions
     const deadliftScore = typeof deadlift === "number" ? calculateDeadliftScore(deadlift, ageGroupIndex, gender) : 0
+    const combatDeadlift = typeof deadlift === "number" ? calculateDeadliftScore(deadlift, ageGroupIndex, "male") : 0
 
     const pushupsScore = typeof pushups === "number" ? calculatePushupScore(pushups, ageGroupIndex, gender) : 0
+    const combatPushups = typeof pushups === "number" ? calculatePushupScore(pushups, ageGroupIndex, "male") : 0
 
     const sdcTotalSeconds = getSeconds(sdcMinutes, sdcSeconds)
     const sprintDragCarryScore =
       sdcTotalSeconds > 0 ? calculateSprintDragCarryScore(sdcTotalSeconds, ageGroupIndex, gender) : 0
+      const combatSprintDragCarryScore =
+      sdcTotalSeconds > 0 ? calculateSprintDragCarryScore(sdcTotalSeconds, ageGroupIndex, "male") : 0
 
     const plankTotalSeconds = getSeconds(plankMinutes, plankSeconds)
     const plankScore = plankTotalSeconds > 0 ? calculatePlankScore(plankTotalSeconds, ageGroupIndex, gender) : 0
+    const combatPlankScore = plankTotalSeconds > 0 ? calculatePlankScore(plankTotalSeconds, ageGroupIndex, "male") : 0
 
     const runTotalSeconds = getSeconds(runMinutes, runSeconds)
     const runScore = runTotalSeconds > 0 ? calculateRunScore(runTotalSeconds, ageGroupIndex, gender) : 0
-
+    const combatRunScore = runTotalSeconds > 0 ? calculateRunScore(runTotalSeconds, ageGroupIndex, "male") : 0
     // Calculate total score
     const totalScore = deadliftScore + pushupsScore + sprintDragCarryScore + plankScore + runScore
+    const combatScore = combatDeadlift + combatPlankScore + combatPushups + combatSprintDragCarryScore + combatRunScore
 
     // Determine result
     let testResult: "combat" | "pass" | "fail" = "fail"
 
     if (
-      totalScore >= 420 &&
-      deadliftScore >= 70 &&
-      pushupsScore >= 70 &&
-      sprintDragCarryScore >= 70 &&
-      plankScore >= 70 &&
-      runScore >= 70
+      combatScore >= 350 &&
+      combatDeadlift >= 60 &&
+      combatPushups >= 60 &&
+      combatSprintDragCarryScore >= 60 &&
+      combatPlankScore >= 60 &&
+      combatRunScore >= 60
     ) {
       testResult = "combat"
     } else if (
-      totalScore >= 360 &&
+      totalScore >= 300 &&
       deadliftScore >= 60 &&
       pushupsScore >= 60 &&
       sprintDragCarryScore >= 60 &&
@@ -572,9 +578,9 @@ export default function ArmyFitnessTestCalculator() {
                       </AlertTitle>
                       <AlertDescription>
                         {result === "combat" &&
-                          "You have met the combat standard with a score of 420+ and at least 70 points in each event."}
+                          "You have met the gender-neutral combat standard with a score of 350+ and at least 60 points in each event. The combat standard is equivalent to the male standard for each age group"}
                         {result === "pass" &&
-                          "You have passed the test with a score of 360+ and at least 60 points in each event."}
+                          "You have passed the test with a score of 300+ and at least 60 points in each event."}
                         {result === "fail" && "You did not meet the minimum requirements. Keep training and try again!"}
                       </AlertDescription>
                     </Alert>

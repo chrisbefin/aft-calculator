@@ -2,14 +2,19 @@
   "name": "aft-calculator",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://chrisbefin.github.io",
+  "alt_homepage": "https://aft-calculator.com",
+  "homepage": "https://chrisbefin.github.io/aft-calculator",
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d out"
+    "start-prod": "next start",
+    "export": "next export",
+    "out": "next build && touch ./out/.nojekyll && echo aft-calculator.com > ./out/CNAME",
+    "alt_out": "next build && touch ./out/.nojekyll",
+    "predeploy": "npm run out",
+    "deploy": "gh-pages -d out --dotfiles"
   },
   "dependencies": {
     "@radix-ui/react-label": "^2.1.4",
